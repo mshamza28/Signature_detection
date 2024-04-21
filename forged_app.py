@@ -7,9 +7,6 @@ Original file is located at
     https://colab.research.google.com/drive/1nuhBxN0Fx-lbN3JVQ_P_rkonzQloHBxv
 """
 
-!pip install streamlit
-!pip install streamlit-lottie
-
 import streamlit as st
 from PIL import Image
 import numpy as np
