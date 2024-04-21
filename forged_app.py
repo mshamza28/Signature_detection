@@ -20,7 +20,6 @@ from tensorflow.keras.applications.resnet50 import preprocess_input
 
 
 # Load the pre-trained custom model
-@st.cache(allow_output_mutation=True)
 def load_model_from_drive(file_id):
     """Load model from Google Drive shareable link."""
     drive_url = f"https://drive.google.com/uc?id={file_id}&export=download"
