@@ -7,16 +7,30 @@ Original file is located at
     https://colab.research.google.com/drive/1nuhBxN0Fx-lbN3JVQ_P_rkonzQloHBxv
 """
 
+# Necessary Libraries
+import requests
 import streamlit as st
 from PIL import Image
 import numpy as np
+from io import BytesIO
 import matplotlib.pyplot as plt
 from tensorflow.keras.models import load_model
 from tensorflow.keras.preprocessing import image
 from tensorflow.keras.applications.resnet50 import preprocess_input
 
-# Load the pre-trained model (Make sure to load your custom model here)
-model = load_model('/content/drive/MyDrive/best_model.h5')
+
+# Load the pre-trained custom model
+@st.cache(allow_output_mutation=True)
+def load_model_from_drive(file_id):
+    """Load model from Google Drive shareable link."""
+    drive_url = f"https://drive.google.com/uc?id={file_id}"
+    r = requests.get(drive_url)
+    model_file = BytesIO(r.content)
+    model = load_model(model_file)
+    return model
+
+# Use your Google Drive shareable file ID here
+model = load_model_from_drive('1S5d5rHygAbOG6FxBq9AOeFiDtNO5NXj_')
 
 # Function to make predictions and display the image
 def predict_and_show(img_data):
