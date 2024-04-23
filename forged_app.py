@@ -20,21 +20,7 @@ from tensorflow.keras.applications.resnet50 import preprocess_input
 
 
 # Load the pre-trained custom model
-def load_model_from_drive(file_id):
-    """Load model from Google Drive shareable link."""
-    drive_url = f"https://drive.google.com/uc?id={file_id}&export=download"
-    r = requests.get(drive_url)
-    if r.status_code != 200:
-        print("Failed to download: Status code:", r.status_code, "Reason:", r.reason)
-        return None
-    print("Downloaded byte size:", len(r.content))  # Debug: Check the byte size
-    model_file = BytesIO(r.content)
-    model_file.seek(0)  # Ensure the pointer is at the start
-    model = load_model(model_file)
-    return model
-
-# Use your Google Drive shareable file ID here
-model = load_model_from_drive('1S5d5rHygAbOG6FxBq9AOeFiDtNO5NXj_')
+model = load_model('best_model.h5')
 
 # Function to make predictions and display the image
 def predict_and_show(img_data):
