@@ -40,7 +40,7 @@ def predict_and_show(img_data):
     plt.axis('off')
     plt.title(f'Predicted: {result}')
     plt.show()
-
+    return result
 # Streamlit UI
 st.title('Forged Signature Detetction')
 uploaded_file = st.file_uploader("Choose an image...", type=["jpg", "jpeg", "png"])
@@ -51,3 +51,4 @@ if uploaded_file is not None:
     st.write("")
     st.write("Detecting...")
     x = predict_and_show(uploaded_file)
+    st.write(x)
