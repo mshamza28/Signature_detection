@@ -71,7 +71,7 @@ if uploaded_file is not None:
     x = predict_and_show(uploaded_file)
     if st.button('Detect'):
         if x == 1:
-        st.header("Forged Signature")
-    else:
-        st.header("Original Signature")
+            st.header("Forged Signature")
+        else:
+            st.header("Original Signature")
 st.markdown('---')
