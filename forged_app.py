@@ -29,9 +29,6 @@ st.markdown("""
 </style>
 """, unsafe_allow_html=True)
 
-# Load the CSS for the current theme
-load_css(st.session_state['theme'])
-
 # Load Lottie
 def load_lottieurl(url):
     r = requests.get(url)
