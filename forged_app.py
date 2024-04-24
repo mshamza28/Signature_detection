@@ -51,7 +51,7 @@ def predict_and_show(img_data):
     return class_idx
     
 # Streamlit UI
-st.title('Forged Signature Detetction')
+st.title('Forged Signature Detection')
 st.markdown('---')
 uploaded_file = st.file_uploader("Choose an image...", type=["jpg", "jpeg", "png"])
 
