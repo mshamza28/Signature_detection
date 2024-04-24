@@ -29,6 +29,12 @@ st.markdown("""
 </style>
 """, unsafe_allow_html=True)
 
+# Load Lottie
+def load_lottieurl(url):
+    r = requests.get(url)
+    if r.status_code == 200:
+        return r.json()
+
 # Load the pre-trained custom model
 model = load_model('best_model.h5')
 
