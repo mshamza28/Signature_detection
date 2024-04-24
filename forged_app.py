@@ -29,56 +29,6 @@ st.markdown("""
 </style>
 """, unsafe_allow_html=True)
 
-# Define the CSS styles for light and dark themes
-def load_css(theme):
-    if theme == 'dark':
-        css = """
-        <style>
-            body {
-                color: white;
-                background-color: #333;
-            }
-            .big-font {
-                font-size:20px !important;
-                color: #FF4B4B;
-            }
-            .stButton>button {
-                color: white;
-                background-color: #FF4B4B;
-            }
-        </style>
-        """
-    else:
-        css = """
-        <style>
-            body {
-                color: black;
-                background-color: #FFF;
-            }
-            .big-font {
-                font-size:20px !important;
-                color: #0078AA;
-            }
-            .stButton>button {
-                color: black;
-                background-color: #0078AA;
-            }
-        </style>
-        """
-    st.markdown(css, unsafe_allow_html=True)
-
-# Initialize or toggle theme
-if 'theme' not in st.session_state:
-    st.session_state['theme'] = 'light'
-
-def toggle_theme():
-    new_theme = 'dark' if st.session_state['theme'] == 'light' else 'light'
-    st.session_state['theme'] = new_theme
-    load_css(new_theme)
-
-# Place a button in the sidebar for toggling the theme
-st.sidebar.button("Toggle Theme", on_click=toggle_theme)
-
 # Load the CSS for the current theme
 load_css(st.session_state['theme'])
 
