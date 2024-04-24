@@ -60,11 +60,11 @@ if uploaded_file is not None:
     st.image(uploaded_image, caption='Uploaded Image', use_column_width=True)
     st.markdown('---')
     st.write("")
-    st.write("<p class='big-font'>Detecting...</p>", unsafe_allow_html=True)
     
     x = predict_and_show(uploaded_file)
     
     if st.button('Detect'):
+        st.write("<p class='big-font'>Detecting...</p>", unsafe_allow_html=True)
         
         # Display Lottie animation
         lottie_url = "https://lottie.host/48a98916-5ce1-41f7-a043-b5932bc5c542/w183dqaRuZ.json"  # Lottie animation URL
@@ -77,4 +77,5 @@ if uploaded_file is not None:
             st.header("Forged Signature")
         else:
             st.header("Original Signature")
+            
 st.markdown('---')
