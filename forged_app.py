@@ -29,7 +29,7 @@ st.markdown("""
 </style>
 """, unsafe_allow_html=True)
 
-# Theme Selection
+# Define the CSS styles for light and dark themes
 def load_css(theme):
     if theme == 'dark':
         css = """
@@ -67,25 +67,20 @@ def load_css(theme):
         """
     st.markdown(css, unsafe_allow_html=True)
 
-
-# Initialize the theme based on user's previous preference or default to light
+# Initialize or toggle theme
 if 'theme' not in st.session_state:
     st.session_state['theme'] = 'light'
 
-# Toggle theme function
 def toggle_theme():
-    if st.session_state['theme'] == 'light':
-        st.session_state['theme'] = 'dark'
-    else:
-        st.session_state['theme'] = 'light'
-    load_css(st.session_state['theme'])
+    new_theme = 'dark' if st.session_state['theme'] == 'light' else 'light'
+    st.session_state['theme'] = new_theme
+    load_css(new_theme)
 
-# Sidebar or main page toggle
+# Place a button in the sidebar for toggling the theme
 st.sidebar.button("Toggle Theme", on_click=toggle_theme)
 
-# Load the initial or current theme CSS
+# Load the CSS for the current theme
 load_css(st.session_state['theme'])
-
 
 # Load Lottie
 def load_lottieurl(url):
