@@ -63,8 +63,8 @@ if uploaded_file is not None:
     
     x = predict_and_show(uploaded_file)
     
-    if st.button('Detect'):
-        st.write("<p class='big-font'>Detecting...</p>", unsafe_allow_html=True)
+    if st.button('Verify Signature'):
+        st.write("<p class='big-font'>Verifying...</p>", unsafe_allow_html=True)
         
         # Display Lottie animation
         lottie_url = "https://lottie.host/48a98916-5ce1-41f7-a043-b5932bc5c542/w183dqaRuZ.json"  # Lottie animation URL
