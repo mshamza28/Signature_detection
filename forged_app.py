@@ -48,16 +48,17 @@ def predict_and_show(img_data):
     x = preprocess_input(x)  # Preprocess the image
     prediction = model.predict(x)
     class_idx = np.argmax(prediction[0])
-    result = "Forged Signature" if class_idx == 1 else "Original Signature"
-    return result
+    return class_idx
     
 # Streamlit UI
 st.title('Forged Signature Detetction')
+st.markdown('---')
 uploaded_file = st.file_uploader("Choose an image...", type=["jpg", "jpeg", "png"])
 
 if uploaded_file is not None:
     uploaded_image = Image.open(uploaded_file)
     st.image(uploaded_image, caption='Uploaded Image', use_column_width=True)
+    st.markdown('---')
     st.write("")
     st.write("<p class='big-font'>Detecting...</p>", unsafe_allow_html=True)
 
@@ -68,4 +69,9 @@ if uploaded_file is not None:
 
     
     x = predict_and_show(uploaded_file)
-    st.write(x)
+    if st.button('Detect'):
+        if x == 1:
+        st.header("Forged Signature")
+    else:
+        st.header("Original Signature")
+st.markdown('---')
