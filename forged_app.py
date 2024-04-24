@@ -12,12 +12,22 @@ import requests
 import streamlit as st
 from PIL import Image
 import numpy as np
+import plotly.express as px
 from io import BytesIO
 import matplotlib.pyplot as plt
+from streamlit_lottie import st_lottie
 from tensorflow.keras.models import load_model
 from tensorflow.keras.preprocessing import image
 from tensorflow.keras.applications.resnet50 import preprocess_input
 
+# Custom CSS
+st.markdown("""
+<style>
+.big-font {
+    font-size:20px !important;
+}
+</style>
+""", unsafe_allow_html=True)
 
 # Load the pre-trained custom model
 model = load_model('best_model.h5')
@@ -33,14 +43,8 @@ def predict_and_show(img_data):
     prediction = model.predict(x)
     class_idx = np.argmax(prediction[0])
     result = "Forged Signature" if class_idx == 1 else "Original Signature"
-
-    # Display the image with prediction
-    plt.figure(figsize=(5, 5))
-    plt.imshow(img)
-    plt.axis('off')
-    plt.title(f'Predicted: {result}')
-    plt.show()
     return result
+    
 # Streamlit UI
 st.title('Forged Signature Detetction')
 uploaded_file = st.file_uploader("Choose an image...", type=["jpg", "jpeg", "png"])
@@ -49,6 +53,13 @@ if uploaded_file is not None:
     uploaded_image = Image.open(uploaded_file)
     st.image(uploaded_image, caption='Uploaded Image', use_column_width=True)
     st.write("")
-    st.write("Detecting...")
+    st.write("<p class='big-font'>Detecting...</p>", unsafe_allow_html=True)
+
+    # Display Lottie animation
+    lottie_url = "https://lottie.host/48a98916-5ce1-41f7-a043-b5932bc5c542/w183dqaRuZ.json"  # Lottie animation URL
+    lottie_animation = load_lottieurl(lottie_url)
+    st_lottie(lottie_animation, height=200, key="classification")
+
+    
     x = predict_and_show(uploaded_file)
     st.write(x)
