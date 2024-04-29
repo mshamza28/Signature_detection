@@ -74,8 +74,9 @@ if uploaded_file is not None:
         # Print Result
         st.title('Result :')
         if x == 1:
-            st.header("Forged Signature")
+            st.error("The Signature is Forged",icon='❌')
         else:
-            st.header("Original Signature")
+            st.balloons()
+            st.success("The Signature is Original",icon='✔️')
             
 st.markdown('---')
