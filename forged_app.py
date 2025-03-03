@@ -34,54 +34,50 @@ def preprocess_image(img):
 def predict_signature(img_data):
     x = preprocess_image(img_data)
     prediction = model.predict(x)
+    confidence = float(np.max(prediction[0]))  # Get confidence score
     class_idx = np.argmax(prediction[0])
-    return class_idx
+    return class_idx, confidence
 
 # UI Header
 st.set_page_config(page_title="Signature Authentication", page_icon="✍️", layout="centered")
 st.title('✍️ Forged Signature Detection')
-st.markdown("**Upload a signature image or capture one from your webcam!** 🔍")
+st.markdown("**Upload a signature image and let AI determine if it's real or forged.** 🔍")
 
 st.sidebar.title("📌 Instructions")
-st.sidebar.write("1️⃣ Upload a signature image or use the webcam.")
-st.sidebar.write("2️⃣ Click on **Verify Signature** to analyze authenticity.")
-st.sidebar.write("3️⃣ See the result instantly.")
+st.sidebar.write("1️⃣ Upload a signature image (JPG, PNG, JPEG).")
+st.sidebar.write("2️⃣ Click on **Verify Signature** to analyze the authenticity.")
+st.sidebar.write("3️⃣ See the **confidence score** and a grayscale visualization.")
 
-# File Upload Option
+# File Uploader
 uploaded_file = st.file_uploader("📤 Upload Signature Image:", type=["jpg", "jpeg", "png"])
 
-# Webcam Capture Option
-st.markdown("---")
-st.subheader("📷 Capture Signature Using Webcam")
-captured_image = st.camera_input("Click below to capture")
-
-# Determine the source of the image (uploaded or captured)
-image_source = None
 if uploaded_file:
-    image_source = Image.open(uploaded_file)
-elif captured_image:
-    image_source = Image.open(captured_image)
-
-if image_source:
-    # Display uploaded/captured image
-    st.image(image_source, caption="Selected Signature", use_column_width=True)
+    uploaded_image = Image.open(uploaded_file)
+    
+    # Display uploaded image
+    st.image(uploaded_image, caption="Uploaded Signature", use_column_width=True)
 
     # Grayscale transformation for visualization
-    gray_image = ImageOps.grayscale(image_source)
-
+    gray_image = ImageOps.grayscale(uploaded_image)
+    
     # Processing and Prediction
     if st.button("🔎 Verify Signature"):
         if model:
             st.write("⏳ **Processing...**")
-
+            
             # Load animation
             lottie_url = "https://lottie.host/48a98916-5ce1-41f7-a043-b5932bc5c542/w183dqaRuZ.json"
             lottie_animation = load_lottieurl(lottie_url)
             if lottie_animation:
                 st_lottie(lottie_animation, height=200)
 
-            result = predict_signature(image_source)
-
+            result, confidence = predict_signature(uploaded_image)
+            
+            # Progress Bar for Confidence Score
+            st.subheader("🧠 Confidence Score:")
+            st.progress(confidence)
+            st.write(f"**Model Confidence: {confidence * 100:.2f}%**")
+            
             # Display result
             st.markdown("---")
             st.subheader("🔍 Result:")
@@ -98,9 +94,8 @@ if image_source:
             ax.imshow(gray_image, cmap="gray")
             ax.axis("off")
             st.pyplot(fig)
-
+        
         else:
             st.error("⚠️ Model is not loaded. Please check your file.")
 
 st.markdown("---")
-st.write("💡 Developed with ❤️ using Streamlit & TensorFlow.")
