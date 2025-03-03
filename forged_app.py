@@ -46,7 +46,7 @@ st.markdown("**Upload a signature image and let AI determine if it's real or for
 st.sidebar.title("📌 Instructions")
 st.sidebar.write("1️⃣ Upload a signature image (JPG, PNG, JPEG).")
 st.sidebar.write("2️⃣ Click on **Verify Signature** to analyze the authenticity.")
-st.sidebar.write("3️⃣ See the **confidence score** and a grayscale visualization.")
+st.sidebar.write("3️⃣ See the **Result** and a grayscale visualization.")
 
 # File Uploader
 uploaded_file = st.file_uploader("📤 Upload Signature Image:", type=["jpg", "jpeg", "png"])
@@ -73,10 +73,6 @@ if uploaded_file:
 
             result, confidence = predict_signature(uploaded_image)
             
-            # Progress Bar for Confidence Score
-            st.subheader("🧠 Confidence Score:")
-            st.progress(confidence)
-            st.write(f"**Model Confidence: {confidence * 100:.2f}%**")
             
             # Display result
             st.markdown("---")
