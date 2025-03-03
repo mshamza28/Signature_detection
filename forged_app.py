@@ -99,4 +99,3 @@ if uploaded_file:
             st.error("⚠️ Model is not loaded. Please check your file.")
 
 st.markdown("---")
-st.write("💡 Developed with ❤️ using Streamlit & TensorFlow.")
